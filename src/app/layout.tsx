@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
+import ConvexClientProvider from "./ConvexClientProvider";
 import { ModeToggle } from "@/components/modo-toggle";
 import { APP_INFO } from "../../config";
 import "./globals.css";
@@ -28,7 +29,7 @@ export default function RootLayout({
           <div>
             <ModeToggle />
           </div>
-          {children}
+          <ConvexClientProvider>{children}</ConvexClientProvider>
         </ThemeProvider>
       </body>
     </html>
