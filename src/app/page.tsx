@@ -6,7 +6,7 @@ import {
   SignedIn,
   SignedOut,
 } from "@clerk/nextjs";
-import { useMutation } from "convex/react";
+import { useMutation, useQuery } from "convex/react";
 import { api } from "../../convex/_generated/api";
 import { v4 } from "uuid";
 import { Button } from "@/components/ui/button";
@@ -14,6 +14,7 @@ import { Button } from "@/components/ui/button";
 export default function Home() {
   const { isLoaded, session, isSignedIn } = useSession();
   const mutation = useMutation(api.file.createFile);
+  const files = useQuery(api.file.getFiles);
 
   if (!isLoaded) {
     // Add logic to handle loading state
@@ -52,6 +53,14 @@ export default function Home() {
           Create File
         </Button>
       </div>
+
+      {files && (
+        <ul>
+          {files.map((item) => {
+            return <li key={item.key}>{item.name}</li>;
+          })}
+        </ul>
+      )}
     </main>
   );
 }
