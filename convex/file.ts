@@ -1,5 +1,5 @@
 import { mutation, query } from "./_generated/server"
-import { v } from "convex/values"
+import { ConvexError, v } from "convex/values"
 
 export const createFile = mutation({
     args: {
@@ -14,6 +14,10 @@ export const createFile = mutation({
 
 export const getFiles = query({
     async handler(ctx, args) {
+        const identity = await ctx.auth.getUserIdentity()
+        if (!identity) {
+            return []
+        }
         return await ctx.db.query('files').collect()
     },
     args: {}
