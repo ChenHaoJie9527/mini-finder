@@ -57,7 +57,7 @@ export default function Home() {
       {files && (
         <ul>
           {files.map((item) => {
-            return <li key={item.key}>{item.name}</li>;
+            return <li key={item._id}>{item.name}</li>;
           })}
         </ul>
       )}

@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local"
+import localFont from "next/font/local";
 import { ThemeProvider } from "@/components/theme-provider";
 import ConvexClientProvider from "./ConvexClientProvider";
-import { ModeToggle } from "@/components/modo-toggle";
 import { APP_INFO } from "../../config";
 import "./globals.css";
+import Header from "./header";
 
 export const ubuntuFont = localFont({
   src: [
@@ -46,8 +46,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ConvexClientProvider>
-      <html lang="en" suppressContentEditableWarning>
+    <html lang="en" suppressContentEditableWarning>
+      <ConvexClientProvider>
         <body className={ubuntuFont.className}>
           <ThemeProvider
             attribute="class"
@@ -55,13 +55,11 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <div>
-              <ModeToggle />
-            </div>
+            <Header />
             {children}
           </ThemeProvider>
         </body>
-      </html>
-    </ConvexClientProvider>
+      </ConvexClientProvider>
+    </html>
   );
 }
