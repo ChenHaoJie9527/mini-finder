@@ -6,10 +6,14 @@ import {
   SignedIn,
   SignedOut,
 } from "@clerk/nextjs";
+import { useMutation } from "convex/react";
+import { api } from "../../convex/_generated/api";
+import { v4 } from "uuid";
 import { Button } from "@/components/ui/button";
 
 export default function Home() {
   const { isLoaded, session, isSignedIn } = useSession();
+  const mutation = useMutation(api.file.createFile);
 
   if (!isLoaded) {
     // Add logic to handle loading state
@@ -20,11 +24,17 @@ export default function Home() {
     return null;
   }
 
+  const createFile = async () => {
+    await mutation({
+      name: v4(),
+    });
+  };
+
   return (
     <main className="flex min-h-screen flex-col items-center space-y-4 p-24">
       <SignedIn>
         <SignOutButton>
-        <Button>Sign Out</Button>
+          <Button>Sign Out</Button>
         </SignOutButton>
       </SignedIn>
       <SignedOut>
@@ -34,10 +44,13 @@ export default function Home() {
       </SignedOut>
 
       <div>
-        <p>
-          This session has been active since{" "}
-          {session.lastActiveAt.toLocaleString()}
-        </p>
+        <Button
+          onClick={() => {
+            createFile();
+          }}
+        >
+          Create File
+        </Button>
       </div>
     </main>
   );
